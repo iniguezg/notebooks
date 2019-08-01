@@ -1,6 +1,5 @@
 numpy
 pandas
-wordcloud
 ipywidgets
 IPython
 matplotlib
