@@ -1,6 +1,7 @@
 numpy
+tables
 pandas
-ipywidgets
 IPython
+ipywidgets
 matplotlib
 nbinteract
