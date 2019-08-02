@@ -13156,7 +13156,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="images/logo.png" width="300"></p>
-<h1 id="An&#225;lisis-de-spots-(Auditsa)-y-ratings-(Inra)-en-la-radio-mexicana">An&#225;lisis de spots (Auditsa) y ratings (Inra) en la radio mexicana<a class="anchor-link" href="#An&#225;lisis-de-spots-(Auditsa)-y-ratings-(Inra)-en-la-radio-mexicana">&#182;</a></h1>
+
 </div>
 </div>
 </div>
@@ -13176,11 +13176,71 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widg</span>
 <span class="kn">import</span> <span class="nn">IPython.display</span> <span class="k">as</span> <span class="nn">idisp</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="k">as</span> <span class="nn">gridspec</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+  </div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:hide_in</span>
+<span class="c1">#color functions</span>
+
+<span class="n">predify_color</span> <span class="o">=</span> <span class="s1">&#39;0,71,187&#39;</span> <span class="c1">#Predify dark blue</span>
+
+<span class="c1">#print markdown text in color</span>
+<span class="k">def</span> <span class="nf">html</span><span class="p">(</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">text</span> <span class="p">):</span>
+    <span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">idisp</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> &lt;span style=&quot;color: rgb(</span><span class="si">{}</span><span class="s1">)&quot;&gt;</span><span class="si">{}</span><span class="s1">&lt;/span&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">predify_color</span><span class="p">,</span> <span class="n">text</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+  </div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:hide_in</span>
+
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span> <span class="s1">&#39;Análisis de spots (Auditsa) y ratings (Inra) en la radio mexicana&#39;</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h1 id="An&#225;lisis-de-spots-(Auditsa)-y-ratings-(Inra)-en-la-radio-mexicana"><span style="color: rgb(0,71,187)">An&#225;lisis de spots (Auditsa) y ratings (Inra) en la radio mexicana</span><a class="anchor-link" href="#An&#225;lisis-de-spots-(Auditsa)-y-ratings-(Inra)-en-la-radio-mexicana">&#182;</a></h1>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -13201,6 +13261,19 @@ div#notebook {
 
 <span class="n">dataloc</span> <span class="o">=</span> <span class="s1">&#39;data/&#39;</span> <span class="c1">#location of raw datafiles</span>
 <span class="n">imgloc</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span> <span class="c1">#location of images</span>
+
+<span class="c1">#plot settings</span>
+
+<span class="n">plot_props</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;marker&#39;</span> <span class="p">:</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ms&#39;</span> <span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="s1">&#39;ls&#39;</span> <span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;lw&#39;</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;fontsize&#39;</span> <span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s1">&#39;xylabel&#39;</span> <span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s1">&#39;ticklabel&#39;</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="s1">&#39;legend_prop&#39;</span> <span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span><span class="mi">15</span> <span class="p">},</span>
+    <span class="s1">&#39;legend_hlen&#39;</span> <span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;legend_np&#39;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}</span>
 </pre></div>
 
     </div>
@@ -13230,12 +13303,43 @@ div#notebook {
 </div>
 
   </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Columnas-en-datos">Columnas en datos<a class="anchor-link" href="#Columnas-en-datos">&#182;</a></h3>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:hide_in</span>
+
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;###&#39;</span><span class="p">,</span> <span class="s1">&#39;Columnas en datos&#39;</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h3 id="Columnas-en-datos"><span style="color: rgb(0,71,187)">Columnas en datos</span><a class="anchor-link" href="#Columnas-en-datos">&#182;</a></h3>
 </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
 
   
 
@@ -13281,12 +13385,43 @@ div#notebook {
 </div>
 
   </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Elementos-m&#225;s-comunes">Elementos m&#225;s comunes<a class="anchor-link" href="#Elementos-m&#225;s-comunes">&#182;</a></h3>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:hide_in</span>
+
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;###&#39;</span><span class="p">,</span> <span class="s1">&#39;Elementos más comunes&#39;</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h3 id="Elementos-m&#225;s-comunes"><span style="color: rgb(0,71,187)">Elementos m&#225;s comunes</span><a class="anchor-link" href="#Elementos-m&#225;s-comunes">&#182;</a></h3>
 </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
 
   
 
@@ -13303,7 +13438,7 @@ div#notebook {
 <span class="k">def</span> <span class="nf">top_elements_column</span><span class="p">(</span> <span class="n">df</span><span class="p">,</span> <span class="n">columna</span><span class="p">,</span> <span class="n">top</span> <span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span> <span class="n">df</span><span class="p">[</span> <span class="n">columna</span> <span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="n">top</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">idisp</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span> <span class="s1">&#39;### Auditsa&#39;</span> <span class="p">)</span> <span class="p">)</span>
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;###&#39;</span><span class="p">,</span> <span class="s1">&#39;Auditsa&#39;</span> <span class="p">)</span>
     
 <span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">widg</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span> <span class="n">top_elements_column</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">widg</span><span class="o">.</span><span class="n">fixed</span><span class="p">(</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">]</span> <span class="p">),</span>
                                  <span class="n">columna</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="c1">#get top elements in column</span>
@@ -13323,7 +13458,7 @@ div#notebook {
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h3 id="Auditsa">Auditsa<a class="anchor-link" href="#Auditsa">&#182;</a></h3>
+<h3 id="Auditsa"><span style="color: rgb(0,71,187)">Auditsa</span><a class="anchor-link" href="#Auditsa">&#182;</a></h3>
 </div>
 
 </div>
@@ -13358,7 +13493,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:right</span>
 <span class="c1">#nbi:hide_in</span>
 
-<span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">idisp</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span> <span class="s1">&#39;### Inra&#39;</span> <span class="p">)</span> <span class="p">)</span>
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;###&#39;</span><span class="p">,</span> <span class="s1">&#39;Inra&#39;</span> <span class="p">)</span>
 
 <span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">widg</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span> <span class="n">top_elements_column</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">widg</span><span class="o">.</span><span class="n">fixed</span><span class="p">(</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inra&#39;</span><span class="p">]</span> <span class="p">),</span>
                                  <span class="n">columna</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;inra&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="c1">#get top elements in column</span>
@@ -13378,7 +13513,7 @@ div#notebook {
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h3 id="Inra">Inra<a class="anchor-link" href="#Inra">&#182;</a></h3>
+<h3 id="Inra"><span style="color: rgb(0,71,187)">Inra</span><a class="anchor-link" href="#Inra">&#182;</a></h3>
 </div>
 
 </div>
@@ -13401,12 +13536,43 @@ div#notebook {
 </div>
 
   </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Estaciones-por-plaza">Estaciones por plaza<a class="anchor-link" href="#Estaciones-por-plaza">&#182;</a></h3>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:hide_in</span>
+
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;###&#39;</span><span class="p">,</span> <span class="s1">&#39;Estaciones por plaza&#39;</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h3 id="Estaciones-por-plaza"><span style="color: rgb(0,71,187)">Estaciones por plaza</span><a class="anchor-link" href="#Estaciones-por-plaza">&#182;</a></h3>
 </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
 
   
 
@@ -13426,7 +13592,7 @@ div#notebook {
     <span class="k">for</span> <span class="n">estacion</span> <span class="ow">in</span> <span class="n">group_plaza_auditsa</span><span class="p">[</span><span class="s1">&#39;estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
         <span class="nb">print</span><span class="p">(</span> <span class="n">estacion</span> <span class="p">)</span>
 
-<span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">idisp</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span> <span class="s1">&#39;### Auditsa&#39;</span> <span class="p">)</span> <span class="p">)</span>
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;###&#39;</span><span class="p">,</span> <span class="s1">&#39;Auditsa&#39;</span> <span class="p">)</span>
         
 <span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">widg</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span> <span class="n">stations_place</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">widg</span><span class="o">.</span><span class="n">fixed</span><span class="p">(</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">]</span> <span class="p">),</span>
                                  <span class="n">plaza</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">][</span><span class="s1">&#39;plaza&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">)</span> <span class="p">)</span> <span class="c1">#get stations per place</span>
@@ -13446,7 +13612,7 @@ div#notebook {
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h3 id="Auditsa">Auditsa<a class="anchor-link" href="#Auditsa">&#182;</a></h3>
+<h3 id="Auditsa"><span style="color: rgb(0,71,187)">Auditsa</span><a class="anchor-link" href="#Auditsa">&#182;</a></h3>
 </div>
 
 </div>
@@ -13481,7 +13647,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:right</span>
 <span class="c1">#nbi:hide_in</span>
 
-<span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">idisp</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span> <span class="s1">&#39;### Inra&#39;</span> <span class="p">)</span> <span class="p">)</span>
+<span class="n">html</span><span class="p">(</span> <span class="s1">&#39;###&#39;</span><span class="p">,</span> <span class="s1">&#39;Inra&#39;</span> <span class="p">)</span>
 
 <span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">widg</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span> <span class="n">stations_place</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">widg</span><span class="o">.</span><span class="n">fixed</span><span class="p">(</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inra&#39;</span><span class="p">]</span> <span class="p">),</span>
                                  <span class="n">plaza</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;inra&#39;</span><span class="p">][</span><span class="s1">&#39;plaza&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">)</span> <span class="p">)</span> <span class="c1">#get stations per place</span>
@@ -13501,7 +13667,7 @@ div#notebook {
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h3 id="Inra">Inra<a class="anchor-link" href="#Inra">&#182;</a></h3>
+<h3 id="Inra"><span style="color: rgb(0,71,187)">Inra</span><a class="anchor-link" href="#Inra">&#182;</a></h3>
 </div>
 
 </div>
@@ -13527,16 +13693,66 @@ div#notebook {
 
   
 
-  <div class="
+  <div class="nbinteract-hide_in
       cell border-box-sizing code_cell rendered">
     <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#nbi:hide_in</span>
+<span class="c1">#plot total number of spots in stations</span>
+
+<span class="n">months</span> <span class="o">=</span> <span class="p">[</span> <span class="s1">&#39;enero&#39;</span><span class="p">,</span> <span class="s1">&#39;febrero&#39;</span><span class="p">,</span> <span class="s1">&#39;marzo&#39;</span><span class="p">,</span> <span class="s1">&#39;abril&#39;</span><span class="p">,</span> <span class="s1">&#39;mayo&#39;</span> <span class="p">]</span> <span class="c1">#months in right order</span>
+
+<span class="c1">#plot total number of spots in stations</span>
+<span class="k">def</span> <span class="nf">plot_spots_station</span><span class="p">(</span> <span class="n">estacion_1</span><span class="p">,</span> <span class="n">estacion_2</span> <span class="p">):</span>
+    
+    <span class="n">cond_1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">][</span><span class="s1">&#39;estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion_1</span> <span class="c1">#condition to filter data</span>
+    <span class="n">yplot_1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">][</span> <span class="n">cond_1</span> <span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span> <span class="s1">&#39;mes&#39;</span> <span class="p">)[</span><span class="s1">&#39;hits&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span> <span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span> <span class="n">months</span> <span class="p">)</span> <span class="c1">#aggregate by month</span>
+
+    <span class="n">cond_2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">][</span><span class="s1">&#39;estacion&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">estacion_2</span> <span class="c1">#condition to filter data</span>
+    <span class="n">yplot_2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">][</span> <span class="n">cond_2</span> <span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span> <span class="s1">&#39;mes&#39;</span> <span class="p">)[</span><span class="s1">&#39;hits&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span> <span class="p">)</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span> <span class="n">months</span> <span class="p">)</span> <span class="c1">#aggregate by month</span>
+    
+    <span class="c1">#initialise plot</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">FigureWidget</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Número de spots en estaciones&#39;</span><span class="p">,</span>
+                       <span class="n">xaxis_title</span><span class="o">=</span><span class="s1">&#39;mes&#39;</span><span class="p">,</span>
+                       <span class="n">yaxis_title</span><span class="o">=</span><span class="s1">&#39;Número de spots&#39;</span> <span class="p">)</span>
+    
+    <span class="c1">#plot plot!</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span> <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span> <span class="n">x</span><span class="o">=</span><span class="n">yplot_1</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">yplot_1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">estacion_1</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span> <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span> <span class="n">x</span><span class="o">=</span><span class="n">yplot_2</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">yplot_2</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">estacion_2</span> <span class="p">)</span> <span class="p">)</span>
+    
+    <span class="c1">#finalise plot</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">#display interactive widget</span>
+<span class="n">idisp</span><span class="o">.</span><span class="n">display</span><span class="p">(</span> <span class="n">widg</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span> <span class="n">plot_spots_station</span><span class="p">,</span> <span class="n">estacion_1</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">][</span><span class="s1">&#39;estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
+                                 <span class="n">estacion_2</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;auditsa&#39;</span><span class="p">][</span><span class="s1">&#39;estacion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="p">)</span> <span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
 </div>
 </div>
 

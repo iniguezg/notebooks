@@ -3,5 +3,5 @@ tables
 pandas
 IPython
 ipywidgets
-matplotlib
+plotly
 nbinteract
