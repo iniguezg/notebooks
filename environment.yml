@@ -1,0 +1,11 @@
+name: predify-test
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - pandas
+  - tables
+  - plotly
+  - IPython
+  - ipywidgets
+  - jupyter_contrib_nbextensions
