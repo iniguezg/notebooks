@@ -1,0 +1,7 @@
+numpy
+pandas
+tables
+plotly
+IPython
+ipywidgets
+jupyter_contrib_nbextensions
