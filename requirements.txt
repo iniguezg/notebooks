@@ -1,8 +1,0 @@
-numpy
-tables
-pandas
-IPython
-ipywidgets
-plotly
-nbinteract
-jupyter_contrib_nbextensions
