@@ -3,5 +3,6 @@ pandas
 tables
 plotly
 IPython
+appmode
 ipywidgets
 jupyter_contrib_nbextensions
