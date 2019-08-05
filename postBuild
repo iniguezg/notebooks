@@ -1,6 +1,6 @@
 #!/bin/bash
 
 jupyter contrib nbextension install --user
-jupyter nbextension enable hide_input_all/main
 jupyter nbextension enable appmode/main
+jupyter serverextension enable --py --sys-prefix appmode
 
